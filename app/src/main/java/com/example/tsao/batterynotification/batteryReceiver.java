@@ -14,7 +14,7 @@ public class batteryReceiver extends BroadcastReceiver {
     public batteryReceiver() {
     }
     @SuppressLint("NewApi")
-    private void SendNotifocation(Context context, int level){
+    private void SendNotification(Context context, int level){
         Notification.Builder builder = new Notification.Builder(context);
         builder.setContentTitle("剩餘電量");
         builder.setContentText(""+level);
@@ -32,7 +32,7 @@ public class batteryReceiver extends BroadcastReceiver {
             int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0); //"level"
             if (level%10 == 0) {
                 Toast.makeText(context, "剩餘電量:" + level, Toast.LENGTH_SHORT).show();
-                SendNotifocation(context, level);
+                SendNotification(context, level);
             }
         }
     }
