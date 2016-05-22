@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.PowerManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,10 +36,15 @@ public class MainActivity extends AppCompatActivity {
         set_bt = (Button) findViewById(R.id.set);
         set_bt.setOnClickListener(new OnClickListener() {
             @Override
-            @SuppressLint("NewApi")
             public void onClick(View v) {
-                hr = tp.getHour();
-                min = tp.getMinute();
+                if (Build.VERSION.SDK_INT >= 23) {
+                    hr = tp.getHour();
+                    min = tp.getMinute();
+                } else {
+                    hr = tp.getCurrentHour();
+                    min = tp.getCurrentMinute();
+                }
+
                 Log.d("MAIN","BUTTON SET CLICKED "+hr+":"+min);
                 Toast.makeText(v.getContext(), "鬧鐘:"+hr+":"+min+"已設定!", Toast.LENGTH_SHORT).show();;
                 Intent it = new Intent();
@@ -70,15 +76,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         am = (AlarmManager) getSystemService(ALARM_SERVICE);
+
         BR_receiver = new batteryReceiver();
         IntentFilter ifilter = new IntentFilter();
         ifilter.addAction(Intent.ACTION_BATTERY_CHANGED);
         registerReceiver(BR_receiver, ifilter);
     }
     @Override
-    protected void onPause(){
-        super.onPause();
+    protected void onDestroy(){
         unregisterReceiver(BR_receiver);
+        super.onDestroy();
     }
 
 }
