@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 hr = tp.getHour();
                 min = tp.getMinute();
                 Log.d("MAIN","BUTTON SET CLICKED "+hr+":"+min);
+                Toast.makeText(v.getContext(), "鬧鐘:"+hr+":"+min+"已設定!", Toast.LENGTH_SHORT).show();;
                 Intent it = new Intent();
                 it.setClass(MainActivity.this, AlarmReceiver.class);
                 it.putExtra("TIME",hr+":"+min);

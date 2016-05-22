@@ -24,7 +24,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         builder.setSmallIcon(R.mipmap.ic_launcher);
 
         Intent it = new Intent();
-        //it.setClass(context, AlarmActivity.class);
+        it.setClass(context, AlarmActivity.class);
         PendingIntent pi = PendingIntent.getActivity(context, 0, it, 0);
         builder.setContentIntent(pi);
 
